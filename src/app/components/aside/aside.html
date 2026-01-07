@@ -1,0 +1,84 @@
+<div class="card flex ">
+  <p-drawer #drawerRef [(visible)]="visible">
+    <ng-template #headless>
+      <div class="flex flex-col h-full ">
+        <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+          <span class="inline-flex items-center gap-2">
+            <i class="pi pi-video " style="font-size: 2rem;"></i>
+            <span class="font-semibold text-2xl text-primary">ANGULAR</span>
+          </span>
+          <span>
+            <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true" outlined="true"
+              styleClass="h-8 w-8"></p-button>
+          </span>
+        </div>
+        <div class="overflow-y-auto">
+          <ul class="list-none p-4 m-0">
+            <li>
+              <ul class="list-none p-0 m-0 overflow-hidden">
+                <li>
+                  <a [routerLink]="['/favoryte']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-heart mr-2"></i>
+                    <span class="font-medium">Favorite</span>
+                    <span
+                      class="inline-flex items-center justify-center ml-auto bg-primary text-primary-contrast rounded-full"
+                      style="min-width: 1.5rem; height: 1.5rem">3</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/watch-later']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-stopwatch mr-2"></i>
+                    <span class="font-medium">Watch Later</span>
+                    <span
+                      class="inline-flex items-center justify-center ml-auto bg-primary text-primary-contrast rounded-full"
+                      style="min-width: 1.5rem; height: 1.5rem">3</span>
+                  </a>
+                </li>
+                <hr class="mb-4 mx-4 border-t border-0 border-surface" />
+                <li>
+                  <a [routerLink]="['/now-playing']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-list mr-2"></i>
+                    <span class="font-medium">Now Playing</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/popular']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-list mr-2"></i>
+                    <span class="font-medium">Popular</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/top-rated']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-list mr-2"></i>
+                    <span class="font-medium">Top Rated</span>
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/upcoming']" routerLinkActive="active-link" pRipple
+                    class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                    <i class="pi pi-list mr-2"></i>
+                    <span class="font-medium">Upcoming</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-auto">
+          <hr class="mb-4 mx-4 border-t border-0 border-surface" />
+          <a pRipple
+            class="m-4 flex items-center cursor-pointer p-4 gap-2 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+            <span class="font-bold">Amy Elsner</span>
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </p-drawer>
+  <p-button (click)="visible = true" icon="pi pi-bars" />
+</div>

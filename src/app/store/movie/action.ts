@@ -1,0 +1,23 @@
+import { createAction, props } from '@ngrx/store';
+import { Movie, MovieCategory } from '../../models/movie.model/movie.model';
+
+export const loadMovies = createAction(
+  '[Movies] load movies',
+  props<{ category: MovieCategory }>()
+);
+export const loadMoviesSuccess = createAction(
+  '[Movies] load movies success',
+  props<{ movies: Movie[]; category: MovieCategory }>()
+);
+export const loadMoviesFailure = createAction(
+  '[Movies] load movies failure',
+  props<{ error: string; category: MovieCategory }>()
+);
+export const setMovieToFavorite = createAction(
+  '[Movies] set Movie To Favorite ',
+  props<{ movieId: number }>()
+);
+export const setMovieToWatchLater = createAction(
+  '[Movies] set Movie To Watch Later ',
+  props<{ movieId: number }>()
+);

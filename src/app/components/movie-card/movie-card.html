@@ -1,0 +1,14 @@
+<div class="block">
+  <img class="block__image" [src]="
+      movie.poster_path
+      ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path
+      : 'https://via.placeholder.com/500x750?text=No+Image'
+      " [alt]="movie.title" />
+  <div class="block__row">
+    <h5 class="block__title">{{ movie.title }}</h5>
+    <div class="block__buttons">
+      <button class="button button-favorite" (click)="addToFavoriteListId(movie.id)">favorite</button>
+      <button class="button button-watch-later" (click)="addToWatchLaterListId(movie.id)">watch later</button>
+    </div>
+  </div>
+</div>

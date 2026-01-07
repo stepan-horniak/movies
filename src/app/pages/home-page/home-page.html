@@ -1,0 +1,8 @@
+<div class="wrapper grid grid-cols-5 gap-4">
+  <app-movie-card *ngFor="let movie of movies$ | async; let i = index" [movie]="movie"></app-movie-card>
+</div>
+
+<div class="card flex justify-center mt-4">
+  <p-paginator [first]="first" [rows]="rows" [totalRecords]="(ollMovies$ | async)?.length"
+    [rowsPerPageOptions]="[10, 20, 30]" (onPageChange)="onPageChange($event)"></p-paginator>
+</div>
