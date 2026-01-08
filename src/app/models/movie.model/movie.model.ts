@@ -38,3 +38,6 @@ export const categoryToStateKey: Record<MovieCategory, keyof MoviesState> = {
   top_rated: 'top_rated',
   upcoming: 'upcoming',
 };
+export interface AuthState {
+  isAuthenticated: boolean;
+}

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model/movie.model';
 import { Store } from '@ngrx/store';
 import { loadMovies } from '../../store/movie/action';
-import { selectFavoriteListId, selectMoviesByCategory } from '../../store/movie/selectors';
+import { selectMoviesByCategory } from '../../store/movie/selectors';
 
 @Component({
   selector: 'app-top-rated-page',
@@ -19,7 +19,5 @@ export class TopRatedPage implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadMovies({ category: 'top_rated' }));
     this.movies$ = this.store.select(selectMoviesByCategory('top_rated'));
-
-    this.store.select(selectFavoriteListId).subscribe((el) => console.log(el));
   }
 }

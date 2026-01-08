@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideHttpClient(),
-    provideStore({ movies: MovieReducers }),
+    provideStore({ movies: MovieReducers, auth: MovieReducers }),
     provideEffects([MoviesEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],

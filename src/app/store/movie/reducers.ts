@@ -8,16 +8,20 @@ export const MovieReducers = createReducer(
     ...state,
     [category]: movies,
   })),
-  on(MovieActions.setMovieToFavorite, (state, { movieId }) => ({
+  // on(MovieActions.setMovieToFavorite, (state, { movieId }) => ({
+  //   ...state,
+  //   favoriteListId: state.favoriteListId.some((el) => el === movieId)
+  //     ? state.favoriteListId
+  //     : [...state.favoriteListId, movieId],
+  // })),
+  // on(MovieActions.setMovieToWatchLater, (state, { movieId }) => ({
+  //   ...state,
+  //   watchLaterListId: state.watchLaterListId.some((el) => el === movieId)
+  //     ? state.watchLaterListId
+  //     : [...state.watchLaterListId, movieId],
+  // }))
+  on(MovieActions.isUserLogged, (state, {}) => ({
     ...state,
-    favoriteListId: state.favoriteListId.some((el) => el === movieId)
-      ? state.favoriteListId
-      : [...state.favoriteListId, movieId],
-  })),
-  on(MovieActions.setMovieToWatchLater, (state, { movieId }) => ({
-    ...state,
-    watchLaterListId: state.watchLaterListId.some((el) => el === movieId)
-      ? state.watchLaterListId
-      : [...state.watchLaterListId, movieId],
+    state: !state,
   }))
 );
