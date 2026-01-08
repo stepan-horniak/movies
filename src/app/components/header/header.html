@@ -20,27 +20,28 @@
       <p-button (click)="showDialog()" icon="pi pi-user" [label]="buttonText" />
       <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent">
         <ng-template #headless>
-          <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
+          <form (ngSubmit)="onSubmitForm()" [formGroup]='form' class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
             style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
-            <div class="inline-flex flex-col gap-2">
-              <label for="username" class="text-primary-50 font-semibold">Username</label>
-              <input pInputText id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
+            <div class="inline-flex flex-col gap-2 ">
+              <label for="username" class="text-primary-50 font-semibold">User Name</label>
+              <input formControlName="name" pInputText id="username"
+                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
             </div>
-            <div class="inline-flex flex-col gap-2">
+            <div class="inline-flex flex-col gap-2 relative">
               <label for="password" class="text-primary-50 font-semibold">Password</label>
-              <input pInputText id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
-                type="password" />
-              <!-- <div class="card flex justify-center">
-                <p-password [(ngModel)]="value" [toggleMask]="true" />
-              </div> -->
+              <input formControlName="password" pInputText id="password"
+                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="visibilityPassword" />
+              <i class="pi pi-eye absolute bottom-5 right-2 cursor-pointer" style="font-size: 1rem"
+                (click)="visiblePass()"></i>
             </div>
+
             <div class="flex items-center gap-4">
               <p-button label="Cancel" (click)="closeDialog()" [text]="true"
                 styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
-              <p-button label="Sign-In" (click)="closeDialog()" [text]="true"
+              <p-button type="submit" label="Sign-In" (click)="closeDialog()" [text]="true"
                 styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
             </div>
-          </div>
+          </form>
         </ng-template>
       </p-dialog>
     </div>

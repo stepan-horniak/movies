@@ -4,12 +4,18 @@ import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
 import { OnIdentifyEffects } from '@ngrx/effects';
 import { selectIsUserLogged } from '../../store/movie/selectors';
-import { map, Observable, take, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, take, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { Dialog } from 'primeng/dialog';
-import { PasswordModule } from 'primeng/password';
-import { FormsModule } from '@angular/forms';
+import { Password, PasswordModule } from 'primeng/password';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 @Component({
   selector: 'app-header',
   imports: [
@@ -20,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     FormsModule,
     PasswordModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -27,7 +34,8 @@ import { FormsModule } from '@angular/forms';
 export class Header implements OnInit {
   public buttonText = '';
   visible: boolean = false;
-  value!: string;
+  visibilityPassword = 'password';
+
   constructor(private store: Store) {}
 
   ngOnInit() {
@@ -38,6 +46,10 @@ export class Header implements OnInit {
       .subscribe((isLogged) => {
         this.buttonText = isLogged ? 'Sing Up' : 'Sing In';
       });
+
+    this.form.valueChanges.pipe(debounceTime(300), distinctUntilChanged()).subscribe((value) => {
+      console.log('Після паузи:', value);
+    });
   }
 
   userSingIn() {}
@@ -45,8 +57,17 @@ export class Header implements OnInit {
   showDialog() {
     this.visible = true;
   }
-
   closeDialog() {
     this.visible = false;
   }
+  visiblePass() {
+    this.visibilityPassword === 'password'
+      ? (this.visibilityPassword = 'text')
+      : (this.visibilityPassword = 'password');
+  }
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    password: new FormControl('', Validators.required),
+  });
+  onSubmitForm() {}
 }
