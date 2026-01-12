@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
-  AuthState,
   categoryToStateKey,
   Movie,
   MovieCategory,
@@ -10,10 +9,11 @@ import {
 export const selectMoviesState = createFeatureSelector<MoviesState>('movies');
 
 export const selectMoviesByCategory = (category: MovieCategory) =>
-  createSelector(selectMoviesState, (state): Movie[] | undefined => {
-    return state[categoryToStateKey[category]];
+  createSelector(selectMoviesState, (state): Movie[] => {
+    return state.listMovies[categoryToStateKey[category]];
   });
 
-export const selectAuthState = createFeatureSelector<AuthState>('auth');
-
-export const selectIsUserLogged = createSelector(selectAuthState, (state) => state.isAuthenticated);
+export const selectIsUserLogged = createSelector(
+  selectMoviesState,
+  (state) => state.isAuthenticated
+);

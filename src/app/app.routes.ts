@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./pages/home-page/home-page').then((m) => m.HomePage) },
   {
     path: 'favoryte',
     loadComponent: () => import('./pages/favoryte-page/favoryte-page').then((m) => m.FavorytePage),
+    canActivate: [AuthGuard],
   },
   {
     path: 'now-playing',
@@ -28,5 +30,6 @@ export const routes: Routes = [
     path: 'watch-later',
     loadComponent: () =>
       import('./pages/watch-later-page/watch-later-page').then((m) => m.WatchLaterPage),
+    canActivate: [AuthGuard],
   },
 ];

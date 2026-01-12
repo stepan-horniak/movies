@@ -17,7 +17,8 @@
             <li>
               <ul class="list-none p-0 m-0 overflow-hidden">
                 <li>
-                  <a [routerLink]="['/favoryte']" routerLinkActive="active-link" pRipple
+                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}"
+                    [routerLink]="['/favoryte']" routerLinkActive="active-link" pRipple
                     class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
                     <i class="pi pi-heart mr-2"></i>
                     <span class="font-medium">Favorite</span>
@@ -27,7 +28,8 @@
                   </a>
                 </li>
                 <li>
-                  <a [routerLink]="['/watch-later']" routerLinkActive="active-link" pRipple
+                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}"
+                    [routerLink]="['/watch-later']" routerLinkActive="active-link" pRipple
                     class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
                     <i class="pi pi-stopwatch mr-2"></i>
                     <span class="font-medium">Watch Later</span>
@@ -74,7 +76,7 @@
           <a pRipple
             class="m-4 flex items-center cursor-pointer p-4 gap-2 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
             <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-            <span class="font-bold">Amy Elsner</span>
+            <span class="font-bold">{{ userName }}</span>
           </a>
         </div>
       </div>

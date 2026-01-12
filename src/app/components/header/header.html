@@ -1,10 +1,11 @@
 <div class="header">
   <div class="header__row">
-    <div class="header__logo flex items-center justify-center"><i class="pi pi-video" style="font-size: 4rem"></i></div>
+    <a [routerLink]="['/']" class="header__logo flex items-center justify-center"><i class="pi pi-video"
+        style="font-size: 4rem"></i></a>
     <app-aside></app-aside>
     <nav class="header__nav nav-header">
       <ul class="nav-header__list">
-        <li class="nav-header__item"><a class="nav-header__link">Home</a></li>
+        <li class="nav-header__item"><a [routerLink]="['/']" class="nav-header__link">Home</a></li>
         <li class="nav-header__item"><a class="nav-header__link">Movies</a></li>
         <li class="nav-header__item"><a class="nav-header__link">Series</a></li>
         <li class="nav-header__item"><a class="nav-header__link">My List</a></li>
@@ -17,8 +18,8 @@
 
 
     <div class="card flex justify-center">
-      <p-button (click)="showDialog()" icon="pi pi-user" [label]="buttonText" />
-      <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent">
+      <p-button (click)="showDialog()" icon="pi pi-user" [label]="  (isLogged$ | async) ? 'Log Out' : 'Log In' " />
+      <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="openPopapLogIn" styleClass="!border-0 !bg-transparent">
         <ng-template #headless>
           <form (ngSubmit)="onSubmitForm()" [formGroup]='form' class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
             style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
@@ -30,7 +31,7 @@
             <div class="inline-flex flex-col gap-2 relative">
               <label for="password" class="text-primary-50 font-semibold">Password</label>
               <input formControlName="password" pInputText id="password"
-                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="visibilityPassword" />
+                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="inputVIsiblePass" />
               <i class="pi pi-eye absolute bottom-5 right-2 cursor-pointer" style="font-size: 1rem"
                 (click)="visiblePass()"></i>
             </div>
@@ -38,8 +39,11 @@
             <div class="flex items-center gap-4">
               <p-button label="Cancel" (click)="closeDialog()" [text]="true"
                 styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
-              <p-button type="submit" label="Sign-In" (click)="closeDialog()" [text]="true"
+              <p-button type="submit" [disabled]="form.invalid" label="Log In"
+                (click)="form.valid ? closeDialog() : null" [text]="true"
                 styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10" class="w-full" />
+
+
             </div>
           </form>
         </ng-template>

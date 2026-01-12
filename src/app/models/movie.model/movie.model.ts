@@ -26,18 +26,18 @@ export interface Movie {
 export type MovieCategory = 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
 
 export interface MoviesState {
-  now_playing: Movie[];
-  popular: Movie[];
-  top_rated: Movie[];
-  upcoming: Movie[];
+  listMovies: {
+    now_playing: Movie[];
+    popular: Movie[];
+    top_rated: Movie[];
+    upcoming: Movie[];
+  };
+  isAuthenticated: boolean;
 }
 
-export const categoryToStateKey: Record<MovieCategory, keyof MoviesState> = {
+export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {
   now_playing: 'now_playing',
   popular: 'popular',
   top_rated: 'top_rated',
   upcoming: 'upcoming',
 };
-export interface AuthState {
-  isAuthenticated: boolean;
-}
