@@ -21,5 +21,9 @@ export const MovieReducers = createReducer(
   on(MovieActions.searchMovieSuccess, (state, { movies }) => ({
     ...state,
     searchListMovies: movies,
+  })),
+  on(MovieActions.selectedMovie, (state, { movie }) => ({
+    ...state,
+    selectedMovie: movie,
   }))
 );

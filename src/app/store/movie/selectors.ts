@@ -9,7 +9,7 @@ import {
 export const selectMoviesState = createFeatureSelector<MoviesState>('movies');
 
 export const selectMoviesByCategory = (category: MovieCategory) =>
-  createSelector(selectMoviesState, (state): Movie[] => {
+  createSelector(selectMoviesState, (state) => {
     return state.listMovies[categoryToStateKey[category]];
   });
 
@@ -21,5 +21,10 @@ export const selectIsUserLogged = createSelector(
 export const selectUserName = createSelector(selectMoviesState, (state) => state.authUserName);
 export const selectSearchListMovies = createSelector(
   selectMoviesState,
-  (state): Movie[] => state.searchListMovies
+  (state) => state.searchListMovies
+);
+
+export const selectSelectedMovie = createSelector(
+  selectMoviesState,
+  (state) => state.selectedMovie
 );

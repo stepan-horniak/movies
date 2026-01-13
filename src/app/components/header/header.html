@@ -15,7 +15,7 @@
       <p-iconfield>
         <p-inputicon class="pi pi-search cursor-pointer" />
         <p-autocomplete [suggestions]="filteredMovies " (completeMethod)="filterCountry($event)" optionLabel="title"
-          formControlName="search" id="over_label" autocomplete="off" />
+          (onSelect)="onMovieSelect($event)" formControlName="search" id="over_label" autocomplete="off" />
       </p-iconfield>
       <label for="over_label">Search</label>
     </p-floatlabel>
@@ -30,14 +30,14 @@
             <p-iftalabel class="inline-flex flex-col gap-2">
               <label for="username" class=" font-semibold ">User
                 Name</label>
-              <input pInputText id="username" [(ngModel)]="valueUserName" formControlName="name" pInputText
-                id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
+              <input pInputText id="username" formControlName="name" pInputText id="username"
+                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
             </p-iftalabel>
 
             <p-iftalabel class="inline-flex flex-col gap-2 relative">
               <label for="password" class="text-red-500 font-bold">Password</label>
-              <input pInputText id="password" [(ngModel)]="valuePassword" formControlName="password" pInputText
-                id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="inputVIsiblePass" />
+              <input pInputText id="password" formControlName="password" pInputText id="password"
+                class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="inputVIsiblePass" />
               <i class="pi pi-eye absolute bottom-5 right-2 cursor-pointer" style="font-size: 1rem"
                 (click)="visiblePass()"></i>
             </p-iftalabel>

@@ -32,4 +32,9 @@ export const routes: Routes = [
       import('./pages/watch-later-page/watch-later-page').then((m) => m.WatchLaterPage),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'movie-details',
+    loadComponent: () =>
+      import('./pages/movie-details-page/movie-details-page').then((m) => m.MovieDetailsPage),
+  },
 ];

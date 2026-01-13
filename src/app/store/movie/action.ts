@@ -32,6 +32,8 @@ export const searchMovieFailure = createAction(
   props<{ error: string }>()
 );
 
+export const selectedMovie = createAction('[Movies] Selected Movie', props<{ movie: Movie }>());
+
 //=========================================
 export const isUserLogged = createAction('[auth] is user logged ');
 export const loadUserName = createAction('[auth] Load User Name ', props<{ userName: string }>());

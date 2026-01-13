@@ -35,6 +35,7 @@ export interface MoviesState {
   isAuthenticated: boolean;
   authUserName: string;
   searchListMovies: Movie[];
+  selectedMovie: Movie;
 }
 
 export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {

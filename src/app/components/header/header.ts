@@ -1,9 +1,9 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Aside } from '../aside/aside';
 import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
 import { selectIsUserLogged, selectSearchListMovies } from '../../store/movie/selectors';
-import { debounceTime, distinctUntilChanged, filter, map, Observable, take } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { Dialog } from 'primeng/dialog';
@@ -16,13 +16,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { IftaLabelModule } from 'primeng/iftalabel';
-import { isUserLogged, searchMovie } from '../../store/movie/action';
-import { RouterLink } from '@angular/router';
+import { isUserLogged, searchMovie, selectedMovie } from '../../store/movie/action';
+import { Router, RouterLink } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { MovieServise } from '../../services/movie.servise';
-import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import {
+  AutoComplete,
+  AutoCompleteCompleteEvent,
+  AutoCompleteSelectEvent,
+} from 'primeng/autocomplete';
 import { Movie } from '../../models/movie.model/movie.model';
 
 @Component({
@@ -48,28 +51,36 @@ import { Movie } from '../../models/movie.model/movie.model';
 })
 export class Header implements OnInit {
   public isLogged$!: Observable<boolean>;
-  public openPopapLogIn: boolean = true;
+  public openPopapLogIn = false;
   public inputVIsiblePass = 'password';
-  valueUserName: string | undefined;
-  valuePassword: string | undefined;
-  searchMovies$!: Observable<Movie[]>;
-  selectedMovie!: Movie;
+
+  searchMovies$: Observable<Movie[]>;
   filteredMovies: Movie[] = [];
 
-  constructor(private store: Store) {}
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+  });
 
-  ngOnInit() {
+  search = new FormGroup({
+    search: new FormControl('', Validators.minLength(3)),
+  });
+
+  constructor(private store: Store, private router: Router) {
+    this.searchMovies$ = this.store.select(selectSearchListMovies);
+  }
+
+  ngOnInit(): void {
     this.isLogged$ = this.store.select(selectIsUserLogged);
+
     this.search
       .get('search')
       ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        if (value) {
+        if (value && value.length >= 3) {
           this.store.dispatch(searchMovie({ movieName: value }));
-          this.searchMovies$ = this.store.select(selectSearchListMovies);
         }
       });
-    //===================================
   }
 
   filterCountry(event: AutoCompleteCompleteEvent) {
@@ -77,20 +88,24 @@ export class Header implements OnInit {
 
     this.searchMovies$
       .pipe(
-        take(1), // один emit
-        map((movies) => movies || []), // гарантуємо масив
+        take(1),
+        map((movies) => movies || []),
         map((movies) => movies.filter((m: Movie) => m.title.toLowerCase().includes(query)))
       )
-      .subscribe((filtered) => {
+      .subscribe((filtered: Movie[]) => {
         this.filteredMovies = filtered;
       });
   }
 
-  //=====================================
+  onMovieSelect(event: AutoCompleteSelectEvent) {
+    const movie: Movie = event.value;
+    this.store.dispatch(selectedMovie({ movie }));
+    this.router.navigate(['/movie-details']);
+  }
 
   showDialog() {
-    this.isLogged$.pipe(take(1)).subscribe((isLogIn) => {
-      if (isLogIn) {
+    this.isLogged$.pipe(take(1)).subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
         document.cookie = `name=; path=/`;
         this.store.dispatch(isUserLogged());
       } else {
@@ -98,28 +113,20 @@ export class Header implements OnInit {
       }
     });
   }
+
   closeDialog() {
     this.openPopapLogIn = false;
   }
+
   visiblePass() {
-    this.inputVIsiblePass === 'password'
-      ? (this.inputVIsiblePass = 'text')
-      : (this.inputVIsiblePass = 'password');
+    this.inputVIsiblePass = this.inputVIsiblePass === 'password' ? 'text' : 'password';
   }
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
+
   onSubmitForm() {
-    document.cookie = `name=${this.form.value.name}; path=/`;
-
-    this.store.dispatch(isUserLogged());
-    this.isLogged$ = this.store.select(selectIsUserLogged);
+    if (this.form.valid) {
+      document.cookie = `name=${this.form.value.name}; path=/`;
+      this.store.dispatch(isUserLogged());
+      this.closeDialog();
+    }
   }
-
-  search = new FormGroup({
-    search: new FormControl('', Validators.minLength(3)),
-  });
-
-  //==========================================
 }

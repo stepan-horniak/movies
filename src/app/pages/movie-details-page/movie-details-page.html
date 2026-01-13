@@ -1,0 +1,17 @@
+@if (movie$ | async; as movie) {
+<div class="block">
+  <div class="block__row ">
+    <div class="block__image"><img [src]="'https://image.tmdb.org/t/p/w500' + movie?.poster_path" [alt]="movie?.title">
+    </div>
+    <div class="block__info info-block ">
+      <div class="info-block__title">{{movie?.title}}</div>
+      <div class="info-block__date">{{movie?.release_date | date}}</div>
+      <div class="info-block__score">{{movie?.vote_average}} <i class="pi pi-star-fill"
+          style="color: rgb(232, 201, 60)"></i>
+      </div>
+      <div class="info-block__info-text">{{movie?.overview}}</div>
+      <div class="info-block__language">мова : {{movie?.original_language | uppercase}}</div>
+    </div>
+  </div>
+</div>
+}
