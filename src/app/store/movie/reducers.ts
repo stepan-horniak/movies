@@ -16,5 +16,10 @@ export const MovieReducers = createReducer(
     ...state,
     isAuthenticated: !state.isAuthenticated,
     authUserName: userName,
+  })),
+
+  on(MovieActions.searchMovieSuccess, (state, { movies }) => ({
+    ...state,
+    searchListMovies: movies,
   }))
 );

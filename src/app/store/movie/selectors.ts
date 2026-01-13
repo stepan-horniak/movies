@@ -19,3 +19,7 @@ export const selectIsUserLogged = createSelector(
 );
 
 export const selectUserName = createSelector(selectMoviesState, (state) => state.authUserName);
+export const selectSearchListMovies = createSelector(
+  selectMoviesState,
+  (state): Movie[] => state.searchListMovies
+);

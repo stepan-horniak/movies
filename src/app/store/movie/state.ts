@@ -11,6 +11,7 @@ export interface MovieState {
   };
   isAuthenticated: boolean;
   authUserName: string | null;
+  searchListMovies: Movie[] | null;
 }
 export const initialState: MovieState = {
   watchLaterListId: [],
@@ -23,4 +24,5 @@ export const initialState: MovieState = {
   },
   isAuthenticated: false,
   authUserName: null,
+  searchListMovies: null,
 };

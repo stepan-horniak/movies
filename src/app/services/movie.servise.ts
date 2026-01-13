@@ -21,6 +21,15 @@ export class MovieServise {
       },
     });
   }
+  searchMovieToName(movieName: string): Observable<MovieRequest> {
+    return this.http.get<MovieRequest>(`${this.baseUrl}/search/movie?query=${movieName}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+  }
+
+  //==============================================================================
   private getRequestToken(): Observable<string> {
     const url = `${this.baseUrl}/authentication/token/new?api_key=${this.apiKey}`;
     return this.http.get<any>(url).pipe(

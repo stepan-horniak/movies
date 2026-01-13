@@ -14,7 +14,7 @@ import { MovieCard } from '../../components/movie-card/movie-card';
   styleUrl: './now-playing-page.scss',
 })
 export class NowPlayingPage implements OnInit {
-  public movies$!: Observable<Movie[] | undefined>;
+  public movies$!: Observable<Movie[] | null>;
   constructor(private store: Store) {}
   ngOnInit(): void {
     this.store.dispatch(loadMovies({ category: 'now_playing' }));

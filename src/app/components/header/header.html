@@ -11,10 +11,14 @@
         <li class="nav-header__item"><a class="nav-header__link">My List</a></li>
       </ul>
     </nav>
-    <div class="header__search search-header">
-      <div class="search-header__icon "><i class="pi pi-search" style="font-size: 1rem"></i></div>
-      <input class="search-header__input" type="text" placeholder="Search">
-    </div>
+    <p-floatlabel [formGroup]="search" class="ml-auto">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search cursor-pointer" />
+        <p-autocomplete [suggestions]="filteredMovies " (completeMethod)="filterCountry($event)" optionLabel="title"
+          formControlName="search" id="over_label" autocomplete="off" />
+      </p-iconfield>
+      <label for="over_label">Search</label>
+    </p-floatlabel>
 
 
     <div class="card flex justify-center">
@@ -23,15 +27,15 @@
         <ng-template #headless>
           <form (ngSubmit)="onSubmitForm()" [formGroup]='form' class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
             style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
-            <p-iftalabel class="inline-flex flex-col gap-2 relative ">
-              <label for="username" class="text-primary-50 font-semibold ">User
+            <p-iftalabel class="inline-flex flex-col gap-2">
+              <label for="username" class=" font-semibold ">User
                 Name</label>
               <input pInputText id="username" [(ngModel)]="valueUserName" formControlName="name" pInputText
                 id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
             </p-iftalabel>
 
             <p-iftalabel class="inline-flex flex-col gap-2 relative">
-              <label for="password" class="text-primary-50 font-semibold">Password</label>
+              <label for="password" class="text-red-500 font-bold">Password</label>
               <input pInputText id="password" [(ngModel)]="valuePassword" formControlName="password" pInputText
                 id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" [type]="inputVIsiblePass" />
               <i class="pi pi-eye absolute bottom-5 right-2 cursor-pointer" style="font-size: 1rem"

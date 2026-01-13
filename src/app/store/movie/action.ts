@@ -22,5 +22,16 @@ export const setMovieToWatchLater = createAction(
   props<{ movieId: number }>()
 );
 
+export const searchMovie = createAction('[Movies] Search Movie ', props<{ movieName: string }>());
+export const searchMovieSuccess = createAction(
+  '[Movies] Search Movie Success ',
+  props<{ movies: Movie[] }>()
+);
+export const searchMovieFailure = createAction(
+  '[Movies] search movies failure',
+  props<{ error: string }>()
+);
+
+//=========================================
 export const isUserLogged = createAction('[auth] is user logged ');
 export const loadUserName = createAction('[auth] Load User Name ', props<{ userName: string }>());
