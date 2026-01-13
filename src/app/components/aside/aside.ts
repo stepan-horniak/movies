@@ -6,7 +6,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { Drawer } from 'primeng/drawer';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectIsUserLogged } from '../../store/movie/selectors';
+import { selectIsUserLogged, selectUserName } from '../../store/movie/selectors';
 import { Observable, take } from 'rxjs';
 import { CommonModule, NgStyle } from '@angular/common';
 @Component({
@@ -26,7 +26,7 @@ import { CommonModule, NgStyle } from '@angular/common';
 })
 export class Aside implements OnInit {
   visible: boolean = false;
-  public userName!: string | null;
+  public userName$!: Observable<string>;
   userAuth$!: Observable<boolean>;
 
   @ViewChild('drawerRef') drawerRef!: Drawer;
@@ -34,13 +34,8 @@ export class Aside implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    const cookies = document.cookie.split('; ');
-
-    const nameCookie = cookies.find((c) => c.startsWith('name='));
-
-    this.userName = nameCookie ? decodeURIComponent(nameCookie.split('=')[1]) : 'Log in';
-
     this.userAuth$ = this.store.select(selectIsUserLogged);
+    this.userName$ = this.store.select(selectUserName);
   }
 
   closeCallback(e: any): void {

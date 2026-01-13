@@ -33,6 +33,7 @@ export interface MoviesState {
     upcoming: Movie[];
   };
   isAuthenticated: boolean;
+  authUserName: string;
 }
 
 export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {

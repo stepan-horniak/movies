@@ -10,6 +10,7 @@ export interface MovieState {
     upcoming: Movie[] | null;
   };
   isAuthenticated: boolean;
+  authUserName: string | null;
 }
 export const initialState: MovieState = {
   watchLaterListId: [],
@@ -21,4 +22,5 @@ export const initialState: MovieState = {
     upcoming: null,
   },
   isAuthenticated: false,
+  authUserName: null,
 };

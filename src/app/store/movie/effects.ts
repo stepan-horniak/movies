@@ -43,4 +43,19 @@ export class MoviesEffects {
       )
     )
   );
+
+  loadUserName$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.isUserLogged),
+
+      map(() => {
+        const cookies = document.cookie.split('; ');
+        const nameCookie = cookies.find((c) => c.startsWith('name='));
+
+        const userName = nameCookie ? decodeURIComponent(nameCookie.split('=')[1]) : 'Log in';
+
+        return MoviesActions.loadUserName({ userName });
+      })
+    )
+  );
 }

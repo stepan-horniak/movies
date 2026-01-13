@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { IftaLabelModule } from 'primeng/iftalabel';
 import { isUserLogged } from '../../store/movie/action';
 import { RouterLink } from '@angular/router';
 @Component({
@@ -29,6 +30,7 @@ import { RouterLink } from '@angular/router';
     PasswordModule,
     ReactiveFormsModule,
     RouterLink,
+    IftaLabelModule,
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -37,7 +39,8 @@ export class Header implements OnInit {
   public isLogged$!: Observable<boolean>;
   public openPopapLogIn: boolean = true;
   public inputVIsiblePass = 'password';
-
+  valueUserName: string | undefined;
+  valuePassword: string | undefined;
   constructor(private store: Store) {}
 
   ngOnInit() {
@@ -63,8 +66,8 @@ export class Header implements OnInit {
       : (this.inputVIsiblePass = 'password');
   }
   form = new FormGroup({
-    name: new FormControl('stepan', [Validators.required, Validators.minLength(3)]),
-    password: new FormControl('12345678', [Validators.required, Validators.minLength(8)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
   onSubmitForm() {
     document.cookie = `name=${this.form.value.name}; path=/`;

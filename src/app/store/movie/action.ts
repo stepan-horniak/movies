@@ -23,3 +23,4 @@ export const setMovieToWatchLater = createAction(
 );
 
 export const isUserLogged = createAction('[auth] is user logged ');
+export const loadUserName = createAction('[auth] Load User Name ', props<{ userName: string }>());

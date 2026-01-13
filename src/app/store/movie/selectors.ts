@@ -17,3 +17,5 @@ export const selectIsUserLogged = createSelector(
   selectMoviesState,
   (state) => state.isAuthenticated
 );
+
+export const selectUserName = createSelector(selectMoviesState, (state) => state.authUserName);

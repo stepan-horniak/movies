@@ -12,8 +12,9 @@ export const MovieReducers = createReducer(
     },
   })),
 
-  on(MovieActions.isUserLogged, (state, {}) => ({
+  on(MovieActions.loadUserName, (state, { userName }) => ({
     ...state,
     isAuthenticated: !state.isAuthenticated,
+    authUserName: userName,
   }))
 );
