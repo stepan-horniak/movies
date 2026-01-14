@@ -1,17 +1,15 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
-import { MovieServise } from './services/movie.servise';
+import { MovieFilter } from './components/movie-filter/movie-filter';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, MovieFilter],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
-  constructor(private service: MovieServise) {}
-
   ngOnInit() {}
 }

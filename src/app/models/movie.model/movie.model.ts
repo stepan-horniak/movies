@@ -23,6 +23,15 @@ export interface Movie {
   vote_count: number;
 }
 
+export interface GenreRequest {
+  genres: Genre[];
+}
+
+export interface Genre {
+  id: number;
+  name: string;
+}
+
 export type MovieCategory = 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
 
 export interface MoviesState {
@@ -36,6 +45,7 @@ export interface MoviesState {
   authUserName: string;
   searchListMovies: Movie[];
   selectedMovie: Movie;
+  genres: Genre[];
 }
 
 export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {
@@ -44,3 +54,5 @@ export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMo
   top_rated: 'top_rated',
   upcoming: 'upcoming',
 };
+
+export type FilterKey = 'cheese' | 'mushroom' | 'pepper' | 'onion';

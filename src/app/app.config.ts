@@ -11,6 +11,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { MovieReducers } from './store/movie/reducers';
 import { MoviesEffects } from './store/movie/effects';
 import { MovieInterceptorFn } from './interseptors/movie.interseptor';
+import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideStore({ movies: MovieReducers }),
     provideEffects([MoviesEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    MessageService,
   ],
 };

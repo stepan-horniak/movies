@@ -25,5 +25,9 @@ export const MovieReducers = createReducer(
   on(MovieActions.selectedMovie, (state, { movie }) => ({
     ...state,
     selectedMovie: movie,
+  })),
+  on(MovieActions.loadGenresMoviesSuccess, (state, { movies }) => ({
+    ...state,
+    genres: movies,
   }))
 );

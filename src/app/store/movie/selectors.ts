@@ -28,3 +28,5 @@ export const selectSelectedMovie = createSelector(
   selectMoviesState,
   (state) => state.selectedMovie
 );
+
+export const selectGenres = createSelector(selectMoviesState, (state) => state.genres);

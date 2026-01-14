@@ -1,0 +1,27 @@
+<p-toast />
+<div class="card flex justify-center">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="flex flex-wrap gap-4 relative">
+    <div class="flex flex-wrap gap-4">
+      @for (item of formKeys; track item) {
+      <div class="flex items-center gap-2">
+        <p-checkbox [inputId]="item" [name]="item" [(ngModel)]="formModel[item]" [binary]="true"
+          [invalid]="isInvalid()"></p-checkbox>
+        <label [for]="item">{{ item | titlecase }}</label>
+      </div>
+      }
+    </div>
+    <p-autocomplete [(ngModel)]="value" name="genre" [suggestions]="filteredGenres" optionLabel="name" [dropdown]="true"
+      (completeMethod)="search($event)">
+    </p-autocomplete>
+    <ng-container>
+      <button pButton severity="secondary" type="submit">
+        <span pButtonLabel>Submit</span>
+      </button>
+      @if (isInvalid()) {
+      <p-message class="absolute -top-1 -right-2 translate-x-full" severity="error" size="small" variant="simple"> At
+        least one ingredient
+        must be selected. </p-message>
+      }
+    </ng-container>
+  </form>
+</div>

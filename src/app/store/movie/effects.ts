@@ -7,7 +7,7 @@ import { concatLatestFrom } from '@ngrx/operators';
 
 import { MovieServise } from '../../services/movie.servise';
 import * as MoviesActions from '../movie/action';
-import { selectMoviesByCategory } from './selectors';
+import { selectGenres, selectMoviesByCategory } from './selectors';
 
 @Injectable()
 export class MoviesEffects {
@@ -72,6 +72,34 @@ export class MoviesEffects {
           catchError((err) =>
             of(
               MoviesActions.searchMovieFailure({
+                error: err.message,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  loadGenresMovie$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.loadGenresMovie),
+      // беремо актуальні жанри зі store
+      concatLatestFrom(() => this.store.select(selectGenres)),
+
+      // якщо жанри вже є — не робимо запит
+      filter(([_, genres]) => !genres || genres.length === 0),
+
+      mergeMap(() =>
+        this.movieData.getGenres().pipe(
+          map((data) =>
+            MoviesActions.loadGenresMoviesSuccess({
+              movies: data.genres,
+            })
+          ),
+          catchError((err) =>
+            of(
+              MoviesActions.loadGenresMoviesFailure({
                 error: err.message,
               })
             )

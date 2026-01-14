@@ -1,4 +1,4 @@
-import { Movie } from '../../models/movie.model/movie.model';
+import { Genre, Movie } from '../../models/movie.model/movie.model';
 
 export interface MovieState {
   watchLaterListId: number[];
@@ -13,6 +13,7 @@ export interface MovieState {
   authUserName: string | null;
   searchListMovies: Movie[] | null;
   selectedMovie: Movie | null;
+  genres: Genre[] | null;
 }
 export const initialState: MovieState = {
   watchLaterListId: [],
@@ -27,4 +28,5 @@ export const initialState: MovieState = {
   authUserName: null,
   searchListMovies: null,
   selectedMovie: null,
+  genres: null,
 };

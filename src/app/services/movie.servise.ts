@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Movie, MovieRequest } from '../models/movie.model/movie.model';
+import { GenreRequest, MovieRequest } from '../models/movie.model/movie.model';
 import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable({
@@ -17,8 +17,13 @@ export class MovieServise {
   getMovies(category: string): Observable<MovieRequest> {
     return this.http.get<MovieRequest>(`${this.baseUrl}/movie/${category}`);
   }
+
   searchMovieToName(movieName: string): Observable<MovieRequest> {
     return this.http.get<MovieRequest>(`${this.baseUrl}/search/movie?query=${movieName}`);
+  }
+
+  getGenres(): Observable<GenreRequest> {
+    return this.http.get<GenreRequest>(`${this.baseUrl}/genre/movie/list`);
   }
 
   //==============================================================================
