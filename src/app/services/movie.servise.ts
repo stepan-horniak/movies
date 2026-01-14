@@ -15,18 +15,10 @@ export class MovieServise {
   userPassword = '19951220Pishti';
   constructor(private http: HttpClient) {}
   getMovies(category: string): Observable<MovieRequest> {
-    return this.http.get<MovieRequest>(`${this.baseUrl}/movie/${category}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get<MovieRequest>(`${this.baseUrl}/movie/${category}`);
   }
   searchMovieToName(movieName: string): Observable<MovieRequest> {
-    return this.http.get<MovieRequest>(`${this.baseUrl}/search/movie?query=${movieName}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this.http.get<MovieRequest>(`${this.baseUrl}/search/movie?query=${movieName}`);
   }
 
   //==============================================================================

@@ -17,8 +17,10 @@
             <li>
               <ul class="list-none p-0 m-0 overflow-hidden">
                 <li>
-                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}"
-                    [routerLink]="['/favoryte']" routerLinkActive="active-link" pRipple
+                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}" [pTooltip]="(isUserLogIn$ | async) ?
+                  '' : 'Please Log In'
+                  " tooltipPosition="right" placeholder="right" [routerLink]="['/favoryte']"
+                    routerLinkActive="active-link" pRipple
                     class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
                     <i class="pi pi-heart mr-2"></i>
                     <span class="font-medium">Favorite</span>
@@ -28,8 +30,10 @@
                   </a>
                 </li>
                 <li>
-                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}"
-                    [routerLink]="['/watch-later']" routerLinkActive="active-link" pRipple
+                  <a [ngStyle]="!(userAuth$ | async) ? {'color': 'red'} : {'color': 'inherit'}" [pTooltip]="(isUserLogIn$ | async) ?
+                  '' : 'Please Log In'
+                  " tooltipPosition="right" placeholder="right" [routerLink]="['/watch-later']"
+                    routerLinkActive="active-link" pRipple
                     class="flex items-center cursor-pointer p-4 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
                     <i class="pi pi-stopwatch mr-2"></i>
                     <span class="font-medium">Watch Later</span>

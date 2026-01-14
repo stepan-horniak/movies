@@ -9,6 +9,9 @@ import { Store } from '@ngrx/store';
 import { selectIsUserLogged, selectUserName } from '../../store/movie/selectors';
 import { Observable, take } from 'rxjs';
 import { CommonModule, NgStyle } from '@angular/common';
+import { Tooltip } from 'primeng/tooltip';
+import { InputTextModule } from 'primeng/inputtext';
+
 @Component({
   selector: 'app-aside',
   imports: [
@@ -20,6 +23,8 @@ import { CommonModule, NgStyle } from '@angular/common';
     RouterLinkActive,
     NgStyle,
     CommonModule,
+    Tooltip,
+    InputTextModule,
   ],
   templateUrl: './aside.html',
   styleUrl: './aside.scss',
@@ -28,6 +33,7 @@ export class Aside implements OnInit {
   visible: boolean = false;
   public userName$!: Observable<string>;
   userAuth$!: Observable<boolean>;
+  isUserLogIn$!: Observable<boolean>;
 
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
@@ -36,6 +42,7 @@ export class Aside implements OnInit {
   ngOnInit(): void {
     this.userAuth$ = this.store.select(selectIsUserLogged);
     this.userName$ = this.store.select(selectUserName);
+    this.isUserLogIn$ = this.store.select(selectIsUserLogged);
   }
 
   closeCallback(e: any): void {
