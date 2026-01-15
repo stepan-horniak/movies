@@ -51,5 +51,5 @@ export const loadUserName = createAction('[auth] Load User Name ', props<{ userN
 //===============================
 export const filterSettings = createAction(
   '[filter] Filter Settings ',
-  props<{ adult: boolean; rated: boolean; genre: string; year: string }>()
+  props<{ adult: boolean; rated: boolean; genre: number; year: number }>()
 );

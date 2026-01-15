@@ -17,8 +17,8 @@ export interface MovieState {
   filterSettings: {
     adult: boolean;
     rated: boolean;
-    genre: string | null;
-    year: string | null;
+    genre: number | null;
+    year: number | null;
   };
 }
 export const initialState: MovieState = {

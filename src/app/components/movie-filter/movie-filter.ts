@@ -41,7 +41,7 @@ export class MovieFilter implements OnInit {
       this.filteredGenres = genres;
     });
     this.ratedIngredient = this.rated[0];
-    this.adultIngredient = this.adult[1];
+    this.adultIngredient = this.adult[0];
   }
 
   searchCategory(event: AutoCompleteCompleteEvent) {
@@ -59,13 +59,13 @@ export class MovieFilter implements OnInit {
   ratedIngredient!: any;
   adultIngredient!: any;
   rated: any[] = [
-    { name: 'топ рейтинг', key: 'C' },
-    { name: 'намменший рейтинг', key: 'M' },
+    { name: 'топ рейтинг', key: true },
+    { name: 'намменший рейтинг', key: false },
   ];
 
   adult: any[] = [
-    { name: 'для дорослих', key: 'A' },
-    { name: 'для дітей', key: 'B' },
+    { name: 'для дорослих', key: true },
+    { name: 'для дітей', key: false },
   ];
   isInvalid(form: NgForm) {
     return !this.ratedIngredient && form.submitted;
@@ -92,13 +92,12 @@ export class MovieFilter implements OnInit {
     if (!this.isInvalid(form)) {
       this.store.dispatch(
         filterSettings({
-          adult: !!form.value.adultIngredient.name,
-          rated: !!form.value.ratedIngredient.name,
-          genre: form.value.genre?.name || null,
-          year: form.value.year || null,
+          adult: form.value.adultIngredient.key,
+          rated: form.value.ratedIngredient.key,
+          genre: parseInt(form.value.genre.id),
+          year: parseInt(form.value.year),
         })
       );
-      console.log('submit');
     }
   }
 }
