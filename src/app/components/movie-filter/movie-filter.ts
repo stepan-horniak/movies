@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
 import { Genre } from '../../models/movie.model/movie.model';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { Store } from '@ngrx/store';
-import { loadGenresMovie } from '../../store/movie/action';
-import { selectGenres } from '../../store/movie/selectors';
+import { filterSettings, loadGenresMovie } from '../../store/movie/action';
+import { selectfilter, selectGenres } from '../../store/movie/selectors';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageService } from 'primeng/api';
 @Component({
@@ -90,7 +90,15 @@ export class MovieFilter implements OnInit {
   }
   onSubmit(form: NgForm) {
     if (!this.isInvalid(form)) {
-      console.log(form.value);
+      this.store.dispatch(
+        filterSettings({
+          adult: !!form.value.adultIngredient.name,
+          rated: !!form.value.ratedIngredient.name,
+          genre: form.value.genre?.name || null,
+          year: form.value.year || null,
+        })
+      );
+      console.log('submit');
     }
   }
 }

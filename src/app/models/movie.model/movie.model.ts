@@ -46,6 +46,12 @@ export interface MoviesState {
   searchListMovies: Movie[];
   selectedMovie: Movie;
   genres: Genre[];
+  filterSettings: {
+    adult: boolean;
+    rated: boolean;
+    genre: string;
+    year: string;
+  };
 }
 
 export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {

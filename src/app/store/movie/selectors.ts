@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   categoryToStateKey,
-  Movie,
   MovieCategory,
   MoviesState,
 } from '../../models/movie.model/movie.model';
@@ -30,3 +29,13 @@ export const selectSelectedMovie = createSelector(
 );
 
 export const selectGenres = createSelector(selectMoviesState, (state) => state.genres);
+
+export const selectfilter = createSelector(selectMoviesState, (state) => {
+  const ollMovie = [
+    state.listMovies.now_playing,
+    state.listMovies.popular,
+    state.listMovies.top_rated,
+    state.listMovies.upcoming,
+  ].flat();
+  return ollMovie;
+});

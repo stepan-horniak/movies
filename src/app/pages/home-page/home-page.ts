@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadMovies } from '../../store/movie/action';
 import { combineLatest, map, Observable } from 'rxjs';
-import { selectMoviesByCategory } from '../../store/movie/selectors';
+import { selectfilter, selectMoviesByCategory } from '../../store/movie/selectors';
 import { Movie } from '../../models/movie.model/movie.model';
 import { MovieCard } from '../../components/movie-card/movie-card';
 import { CommonModule } from '@angular/common';
@@ -45,6 +45,8 @@ export class HomePage implements OnInit {
     );
 
     this.updatePagedMovies();
+
+    this.store.select(selectfilter).subscribe((el) => console.log(el));
   }
 
   onPageChange(event: PaginatorState) {

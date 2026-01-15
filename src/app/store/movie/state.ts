@@ -14,6 +14,12 @@ export interface MovieState {
   searchListMovies: Movie[] | null;
   selectedMovie: Movie | null;
   genres: Genre[] | null;
+  filterSettings: {
+    adult: boolean;
+    rated: boolean;
+    genre: string | null;
+    year: string | null;
+  };
 }
 export const initialState: MovieState = {
   watchLaterListId: [],
@@ -29,4 +35,10 @@ export const initialState: MovieState = {
   searchListMovies: null,
   selectedMovie: null,
   genres: null,
+  filterSettings: {
+    adult: false,
+    rated: false,
+    genre: null,
+    year: null,
+  },
 };

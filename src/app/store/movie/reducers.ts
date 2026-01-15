@@ -29,5 +29,14 @@ export const MovieReducers = createReducer(
   on(MovieActions.loadGenresMoviesSuccess, (state, { movies }) => ({
     ...state,
     genres: movies,
+  })),
+  on(MovieActions.filterSettings, (state, { adult, rated, genre, year }) => ({
+    ...state,
+    filterSettings: {
+      adult,
+      rated,
+      genre,
+      year,
+    },
   }))
 );

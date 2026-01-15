@@ -47,3 +47,9 @@ export const selectedMovie = createAction('[Movies] Selected Movie', props<{ mov
 //=========================================
 export const isUserLogged = createAction('[auth] Is User Logged ');
 export const loadUserName = createAction('[auth] Load User Name ', props<{ userName: string }>());
+
+//===============================
+export const filterSettings = createAction(
+  '[filter] Filter Settings ',
+  props<{ adult: boolean; rated: boolean; genre: string; year: string }>()
+);
