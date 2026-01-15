@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CommonModule } from '@angular/common';
-import { FilterKey, Genre } from '../../models/movie.model/movie.model';
+import { Genre } from '../../models/movie.model/movie.model';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { Store } from '@ngrx/store';
 import { loadGenresMovie } from '../../store/movie/action';
 import { selectGenres } from '../../store/movie/selectors';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-movie-filter',
   imports: [
@@ -20,6 +22,7 @@ import { selectGenres } from '../../store/movie/selectors';
     AutoCompleteModule,
     ButtonModule,
     CommonModule,
+    RadioButtonModule,
   ],
   templateUrl: './movie-filter.html',
   styleUrl: './movie-filter.scss',
@@ -27,7 +30,7 @@ import { selectGenres } from '../../store/movie/selectors';
 export class MovieFilter implements OnInit {
   allGenres: Genre[] = [];
   filteredGenres: Genre[] = [];
-  value: Genre | null = null;
+  valueCategory: Genre | null = null;
 
   constructor(private store: Store) {}
 
@@ -37,9 +40,11 @@ export class MovieFilter implements OnInit {
       this.allGenres = genres;
       this.filteredGenres = genres;
     });
+    this.ratedIngredient = this.rated[0];
+    this.adultIngredient = this.adult[1];
   }
 
-  search(event: AutoCompleteCompleteEvent) {
+  searchCategory(event: AutoCompleteCompleteEvent) {
     const query = event.query?.toLowerCase() ?? '';
 
     this.filteredGenres = this.allGenres.filter((genre) =>
@@ -47,34 +52,45 @@ export class MovieFilter implements OnInit {
     );
   }
   //=========checkbox==============
+  messageService = inject(MessageService);
+
   formSubmitted: boolean = false;
-  formModel: Record<FilterKey, boolean> = {
-    cheese: false,
-    mushroom: false,
-    pepper: false,
-    onion: false,
-  };
-  get formKeys(): FilterKey[] {
-    return Object.keys(this.formModel) as FilterKey[];
+
+  ratedIngredient!: any;
+  adultIngredient!: any;
+  rated: any[] = [
+    { name: 'топ рейтинг', key: 'C' },
+    { name: 'намменший рейтинг', key: 'M' },
+  ];
+
+  adult: any[] = [
+    { name: 'для дорослих', key: 'A' },
+    { name: 'для дітей', key: 'B' },
+  ];
+  isInvalid(form: NgForm) {
+    return !this.ratedIngredient && form.submitted;
   }
-  isInvalid(): boolean {
-    return this.formSubmitted && !this.isAtLeastOneSelected();
-  }
-  isAtLeastOneSelected(): boolean {
-    return Object.values(this.formModel).some((value) => value === true);
-  }
-  onSubmit(form: NgForm) {
-    this.formSubmitted = true;
-    if (this.isAtLeastOneSelected()) {
-      this.formModel = {
-        cheese: false,
-        mushroom: false,
-        pepper: false,
-        onion: false,
-      };
-      form.resetForm(this.formModel);
-      this.formSubmitted = false;
+
+  //=============================
+  itemsYear: string[] = [];
+  valueYear: string | null = null;
+
+  searchYear(event: AutoCompleteCompleteEvent) {
+    const currentYear = new Date().getFullYear();
+
+    const years = Array.from({ length: currentYear - 1970 }, (_, i) =>
+      (currentYear - i).toString()
+    );
+
+    if (event.query) {
+      this.itemsYear = years.filter((year) => year.startsWith(event.query));
+    } else {
+      this.itemsYear = years;
     }
   }
-  //=============================
+  onSubmit(form: NgForm) {
+    if (!this.isInvalid(form)) {
+      console.log(form.value);
+    }
+  }
 }

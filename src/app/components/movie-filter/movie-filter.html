@@ -1,27 +1,47 @@
-<p-toast />
-<div class="card flex justify-center">
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="flex flex-wrap gap-4 relative">
-    <div class="flex flex-wrap gap-4">
-      @for (item of formKeys; track item) {
-      <div class="flex items-center gap-2">
-        <p-checkbox [inputId]="item" [name]="item" [(ngModel)]="formModel[item]" [binary]="true"
-          [invalid]="isInvalid()"></p-checkbox>
-        <label [for]="item">{{ item | titlecase }}</label>
+<div class="card flex justify-center pb-7">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="flex flex-wrap gap-4 relative justify-center">
+    <div class="wrapper-radio flex flex-col gap-y-1">
+      <div class="flex items-center flex-wrap gap-4 ">
+        <div class="">сортувати за :</div>
+        @for (category of rated; track category.name) {
+        <div class="flex items-center gap-2 cursor-pointer">
+          <p-radiobutton [(ngModel)]="ratedIngredient" [inputId]="category.key" [value]="category"
+            [invalid]="isInvalid(form)" name="ratedIngredient" />
+          <label [for]="category.key"> {{ category.name }} </label>
+        </div>
+        }
       </div>
-      }
+      <div class="flex items-center flex-wrap gap-4">
+        <div class="">для дорослих :</div>
+        @for (category of adult; track category.name) {
+        <div class="flex items-center gap-2 cursor-pointer">
+          <p-radiobutton [(ngModel)]="adultIngredient" [inputId]="category.key" [value]="category"
+            [invalid]="isInvalid(form)" name="adultIngredient" />
+          <label [for]="category.key"> {{ category.name }} </label>
+        </div>
+        }
+      </div>
     </div>
-    <p-autocomplete [(ngModel)]="value" name="genre" [suggestions]="filteredGenres" optionLabel="name" [dropdown]="true"
-      (completeMethod)="search($event)">
-    </p-autocomplete>
-    <ng-container>
-      <button pButton severity="secondary" type="submit">
-        <span pButtonLabel>Submit</span>
-      </button>
-      @if (isInvalid()) {
-      <p-message class="absolute -top-1 -right-2 translate-x-full" severity="error" size="small" variant="simple"> At
-        least one ingredient
-        must be selected. </p-message>
-      }
-    </ng-container>
+    <div class="wrapper flex flex-wrap gap-4 items-center">
+      <div class="card flex items-center gap-3">
+        <p-autocomplete placeholder="оберіть рік" [(ngModel)]="valueYear" name="year" [dropdown]="true"
+          [suggestions]="itemsYear" (completeMethod)="searchYear($event)" />
+      </div>
+      <div class="">
+        <p-autocomplete placeholder="оберіть жанр" [(ngModel)]="valueCategory" name="genre"
+          [suggestions]="filteredGenres" optionLabel="name" [dropdown]="true" (completeMethod)="searchCategory($event)">
+        </p-autocomplete>
+      </div>
+      <ng-container>
+        <button pButton severity="secondary" type="submit">
+          <span pButtonLabel>Submit</span>
+        </button>
+        @if (isInvalid(form)) {
+        <p-message class="absolute -top-1 -right-2 translate-x-full" severity="error" size="small" variant="simple"> At
+          least one ingredient
+          must be selected. </p-message>
+        }
+      </ng-container>
+    </div>
   </form>
 </div>

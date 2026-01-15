@@ -1,3 +1,4 @@
+<app-movie-filter></app-movie-filter>
 <div class="wrapper grid grid-cols-5 gap-4">
   <app-movie-card *ngFor="let movie of movies$ | async; let i = index" [movie]="movie"></app-movie-card>
 </div>

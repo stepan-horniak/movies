@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadMovies } from '../../store/movie/action';
-import { combineLatest, filter, forkJoin, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { selectMoviesByCategory } from '../../store/movie/selectors';
 import { Movie } from '../../models/movie.model/movie.model';
 import { MovieCard } from '../../components/movie-card/movie-card';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { MovieFilter } from '../../components/movie-filter/movie-filter';
 
 @Component({
   selector: 'app-home-page',
-  imports: [MovieCard, CommonModule, PaginatorModule],
+  imports: [MovieCard, CommonModule, PaginatorModule, MovieFilter],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
