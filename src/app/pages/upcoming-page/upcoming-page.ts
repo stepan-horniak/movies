@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { Movie } from '../../models/movie.model/movie.model';
 import { Store } from '@ngrx/store';
 import { loadMovies } from '../../store/movie/action';
 import { selectMoviesByCategory } from '../../store/movie/selectors';
 import { CommonModule } from '@angular/common';
 import { MovieCard } from '../../components/movie-card/movie-card';
+import { MovieServise } from '../../services/movie.servise';
 
 @Component({
   selector: 'app-upcoming-page',

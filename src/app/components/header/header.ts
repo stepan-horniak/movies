@@ -3,7 +3,7 @@ import { Aside } from '../aside/aside';
 import { ButtonModule } from 'primeng/button';
 import { Store } from '@ngrx/store';
 import { selectIsUserLogged, selectSearchListMovies } from '../../store/movie/selectors';
-import { debounceTime, distinctUntilChanged, map, Observable, take } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, switchMap, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { Dialog } from 'primeng/dialog';
@@ -17,7 +17,7 @@ import {
 } from '@angular/forms';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { isUserLogged, searchMovie, selectedMovie } from '../../store/movie/action';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -27,6 +27,7 @@ import {
   AutoCompleteSelectEvent,
 } from 'primeng/autocomplete';
 import { Movie } from '../../models/movie.model/movie.model';
+import { MovieServise } from '../../services/movie.servise';
 
 @Component({
   selector: 'app-header',
@@ -66,7 +67,12 @@ export class Header implements OnInit {
     search: new FormControl('', Validators.minLength(3)),
   });
 
-  constructor(private store: Store, private router: Router) {
+  constructor(
+    private store: Store,
+    private router: Router,
+    private movieService: MovieServise,
+    private route: ActivatedRoute
+  ) {
     this.searchMovies$ = this.store.select(selectSearchListMovies);
   }
 
@@ -81,11 +87,23 @@ export class Header implements OnInit {
           this.store.dispatch(searchMovie({ movieName: value }));
         }
       });
+
+    this.route.queryParams.subscribe((params) => {
+      const requestToken = params['request_token']; // TMDB повертає саме цей параметр
+      if (requestToken) {
+        // Тільки тепер токен підтверджений користувачем
+        this.movieService
+          .createSession(requestToken)
+          .pipe(switchMap((session) => this.movieService.getAccountDetails(session.session_id)))
+          .subscribe((account) => {
+            console.log('ACCOUNT ID:', account.id); // отримаєш id
+          });
+      }
+    });
   }
 
   filterCountry(event: AutoCompleteCompleteEvent) {
     const query = event.query.toLowerCase();
-
     this.searchMovies$
       .pipe(
         take(1),
@@ -125,8 +143,14 @@ export class Header implements OnInit {
   onSubmitForm() {
     if (this.form.valid) {
       document.cookie = `name=${this.form.value.name}; path=/`;
+
       this.store.dispatch(isUserLogged());
       this.closeDialog();
+      //==============auth TMDB=============
+      this.movieService.getRequestToken().subscribe((token) => {
+        localStorage.setItem('TMDB-token', token);
+        window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:4200`;
+      });
     }
   }
 }

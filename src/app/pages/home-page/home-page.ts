@@ -1,67 +1,86 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadMovies } from '../../store/movie/action';
-import { combineLatest, map, Observable } from 'rxjs';
-import {
-  selectfilter,
-  selectFilterSettings,
-  selectMoviesByCategory,
-} from '../../store/movie/selectors';
-import { Movie } from '../../models/movie.model/movie.model';
-import { MovieCard } from '../../components/movie-card/movie-card';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+
+import { loadMovies } from '../../store/movie/action';
+import { selectFilterSettings, selectMoviesByCategory } from '../../store/movie/selectors';
+import { Movie, MovieCategory } from '../../models/movie.model/movie.model';
+import { MovieCard } from '../../components/movie-card/movie-card';
 import { MovieFilter } from '../../components/movie-filter/movie-filter';
 
 @Component({
   selector: 'app-home-page',
-  imports: [MovieCard, CommonModule, PaginatorModule, MovieFilter],
+  imports: [CommonModule, MovieCard, MovieFilter, PaginatorModule],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
 export class HomePage implements OnInit {
-  ollMovies$!: Observable<Movie[]>;
+  allMovies$!: Observable<Movie[]>;
   movies$!: Observable<Movie[]>;
 
-  first = 0;
-  rows = 10;
+  page$ = new BehaviorSubject<{ first: number; rows: number }>({
+    first: 0,
+    rows: 10,
+  });
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadMovies({ category: 'now_playing' }));
-    this.store.dispatch(loadMovies({ category: 'popular' }));
-    this.store.dispatch(loadMovies({ category: 'top_rated' }));
-    this.store.dispatch(loadMovies({ category: 'upcoming' }));
+    // 1. Завантаження категорій
+    ['now_playing', 'popular', 'top_rated', 'upcoming'].forEach((category) =>
+      this.store.dispatch(loadMovies({ category: category as MovieCategory }))
+    );
 
-    this.ollMovies$ = combineLatest([
+    // 2. Обʼєднання всіх фільмів + видалення дублікатів
+    this.allMovies$ = combineLatest([
       this.store.select(selectMoviesByCategory('now_playing')),
       this.store.select(selectMoviesByCategory('popular')),
       this.store.select(selectMoviesByCategory('top_rated')),
       this.store.select(selectMoviesByCategory('upcoming')),
     ]).pipe(
-      map(([now, popular, top, upcoming]) => [
-        ...(now ?? []),
+      map(([nowPlaying, popular, topRated, upcoming]) => [
+        ...(nowPlaying ?? []),
         ...(popular ?? []),
-        ...(top ?? []),
+        ...(topRated ?? []),
         ...(upcoming ?? []),
-      ])
+      ]),
+      map((movies) => Array.from(new Map(movies.map((m) => [m.id, m])).values()))
     );
 
-    this.updatePagedMovies();
-    // this.store.select(selectFilterSettings).subscribe((el) => console.log(el));
-    // this.store.select(selectfilter).subscribe((el) => console.log(el));
-  }
+    // 3. Фільтрація + сортування + пагінація
+    this.movies$ = combineLatest([
+      this.allMovies$,
+      this.store.select(selectFilterSettings),
+      this.page$,
+    ]).pipe(
+      map(([allMovies, filters, page]) => {
+        const filterYear = filters.year ? Number(filters.year) : null;
 
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
-    this.updatePagedMovies();
-  }
+        let filtered = allMovies.filter((movie) => {
+          const matchesAdult = filters.adult ? true : movie.adult === false;
 
-  private updatePagedMovies() {
-    this.movies$ = this.ollMovies$.pipe(
-      map((movies) => movies.slice(this.first, this.first + this.rows))
+          const movieYear = Number(movie.release_date?.slice(0, 4));
+
+          const matchesYear = filterYear ? movieYear <= filterYear : true;
+
+          return matchesAdult && matchesYear;
+        });
+
+        filtered = [...filtered].sort((a, b) =>
+          filters.rated ? b.vote_average - a.vote_average : a.vote_average - b.vote_average
+        );
+
+        return filtered.slice(page.first, page.first + page.rows);
+      })
     );
+  }
+
+  onPageChange(event: PaginatorState): void {
+    this.page$.next({
+      first: event.first ?? 0,
+      rows: event.rows ?? 10,
+    });
   }
 }

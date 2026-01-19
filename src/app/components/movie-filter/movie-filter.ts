@@ -9,7 +9,7 @@ import { Genre } from '../../models/movie.model/movie.model';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { Store } from '@ngrx/store';
 import { filterSettings, loadGenresMovie } from '../../store/movie/action';
-import { selectfilter, selectGenres } from '../../store/movie/selectors';
+import { selectGenres } from '../../store/movie/selectors';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageService } from 'primeng/api';
 @Component({
@@ -64,8 +64,8 @@ export class MovieFilter implements OnInit {
   ];
 
   adult: any[] = [
-    { name: 'для дорослих', key: true },
-    { name: 'для дітей', key: false },
+    { name: 'для дорослих', key: false },
+    { name: 'для дітей', key: true },
   ];
   isInvalid(form: NgForm) {
     return !this.ratedIngredient && form.submitted;
@@ -92,10 +92,10 @@ export class MovieFilter implements OnInit {
     if (!this.isInvalid(form)) {
       this.store.dispatch(
         filterSettings({
-          adult: form.value.adultIngredient.key,
-          rated: form.value.ratedIngredient.key,
-          genre: parseInt(form.value.genre.id),
-          year: parseInt(form.value.year),
+          adult: form.value.adultIngredient?.key,
+          rated: form.value.ratedIngredient?.key,
+          genre: parseInt(form.value.genre?.id),
+          year: parseInt(form.value?.year),
         })
       );
     }
