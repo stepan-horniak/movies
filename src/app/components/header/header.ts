@@ -71,7 +71,7 @@ export class Header implements OnInit {
     private store: Store,
     private router: Router,
     private movieService: MovieServise,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.searchMovies$ = this.store.select(selectSearchListMovies);
   }
@@ -89,9 +89,9 @@ export class Header implements OnInit {
       });
 
     this.route.queryParams.subscribe((params) => {
-      const requestToken = params['request_token']; // TMDB повертає саме цей параметр
+      const requestToken = params['request_token'];
       if (requestToken) {
-        // Тільки тепер токен підтверджений користувачем
+        this.store.dispatch(isUserLogged());
         this.movieService
           .createSession(requestToken)
           .pipe(switchMap((session) => this.movieService.getAccountDetails(session.session_id)))
@@ -108,7 +108,7 @@ export class Header implements OnInit {
       .pipe(
         take(1),
         map((movies) => movies || []),
-        map((movies) => movies.filter((m: Movie) => m.title.toLowerCase().includes(query)))
+        map((movies) => movies.filter((m: Movie) => m.title.toLowerCase().includes(query))),
       )
       .subscribe((filtered: Movie[]) => {
         this.filteredMovies = filtered;

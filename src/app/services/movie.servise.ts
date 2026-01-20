@@ -49,4 +49,9 @@ export class MovieServise {
       params: { session_id: sessionId },
     });
   }
+  //=========add favorite===
+  // addFavorite(accountId: string): Observable<any> {
+  //    return this.http.post<{  }>(`${this.baseUrl}/account/${accountId}/favorite`, {
+  //     request_token: ,
+  //   });
 }

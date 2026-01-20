@@ -1,12 +1,11 @@
 import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MovieServise } from '../services/movie.servise';
 
 export function MovieInterceptorFn(
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
   const movieService = inject(MovieServise);
   const token = movieService.token;
