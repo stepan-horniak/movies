@@ -48,7 +48,7 @@ export class MovieFilter implements OnInit {
     const query = event.query?.toLowerCase() ?? '';
 
     this.filteredGenres = this.allGenres.filter((genre) =>
-      genre.name.toLowerCase().includes(query)
+      genre.name.toLowerCase().includes(query),
     );
   }
   //=========checkbox==============
@@ -79,7 +79,7 @@ export class MovieFilter implements OnInit {
     const currentYear = new Date().getFullYear();
 
     const years = Array.from({ length: currentYear - 1970 }, (_, i) =>
-      (currentYear - i).toString()
+      (currentYear - i).toString(),
     );
 
     if (event.query) {
@@ -96,7 +96,7 @@ export class MovieFilter implements OnInit {
           rated: form.value.ratedIngredient?.key,
           genre: parseInt(form.value.genre?.id),
           year: parseInt(form.value?.year),
-        })
+        }),
       );
     }
   }

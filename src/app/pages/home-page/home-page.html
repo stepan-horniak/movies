@@ -8,7 +8,6 @@
 </div>
 <div class="card flex justify-center mt-4">
   <p-paginator [first]="(page$ | async)?.first ?? 0" [rows]="(page$ | async)?.rows ?? 10"
-    [totalRecords]="(allMovies$ | async)?.length ?? 0" [rowsPerPageOptions]="[10,20,30]"
-    (onPageChange)="onPageChange($event)">
+    [totalRecords]="totalRecords$ | async" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="onPageChange($event)">
   </p-paginator>
 </div>
