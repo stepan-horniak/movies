@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GenreRequest, MovieRequest } from '../models/movie.model/movie.model';
-import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +32,9 @@ export class MovieServise {
   }
   //==============createGuestSession===
 
-  createGuestSession(): Observable<any> {
+  createGuestSession(): Observable<string> {
     const url = `${this.baseUrl}/authentication/guest_session/new`;
-    return this.http.get<any>(url);
+    return this.http.get<string>(url);
   }
 
   //=========Create Session=================
@@ -50,8 +50,15 @@ export class MovieServise {
     });
   }
   //=========add favorite===
-  // addFavorite(accountId: string): Observable<any> {
-  //    return this.http.post<{  }>(`${this.baseUrl}/account/${accountId}/favorite`, {
-  //     request_token: ,
-  //   });
+  // const url = 'https://api.themoviedb.org/3/account/22525014/favorite?session_id=0f4999330d926bfbaf027971363f90ce1b15aac0';
+  // { "movie_id": 238, "media_type": "movie", "favorite": true }
+
+  addFavorite(accountId: string, sessionId: string): Observable<any> {
+    return this.http.post<{}>(
+      `${this.baseUrl}/account/${accountId}/favorite?session_id=${sessionId}`,
+      { media_id: 238, media_type: 'movie', favorite: true },
+
+      { headers: { 'Content-Type': 'application/json;charset=utf-8' } },
+    );
+  }
 }

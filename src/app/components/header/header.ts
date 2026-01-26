@@ -94,10 +94,16 @@ export class Header implements OnInit {
         this.store.dispatch(isUserLogged());
         this.movieService
           .createSession(requestToken)
-          .pipe(switchMap((session) => this.movieService.getAccountDetails(session.session_id)))
+          .pipe(
+            switchMap((session) => {
+              localStorage.setItem('sessionId', session.session_id);
+              return this.movieService.getAccountDetails(session.session_id);
+            }),
+          )
           .subscribe((account) => {
-            console.log('ACCOUNT ID:', account.id); // отримаєш id
+            localStorage.setItem('accountId', JSON.stringify(account.id));
           });
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
     });
   }
