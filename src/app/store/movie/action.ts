@@ -43,7 +43,7 @@ export const setMovieToFavorite = createAction(
   props<{ movieId: number }>(),
 );
 export const setMovieToWatchLater = createAction(
-  '[Movies] Set Movie To Watch Later ',
+  '[Movies] Set Movie To Watch List ',
   props<{ movieId: number }>(),
 );
 //=========================================

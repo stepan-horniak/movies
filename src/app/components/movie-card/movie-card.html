@@ -4,11 +4,15 @@
       ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path
       : 'https://via.placeholder.com/500x750?text=No+Image'
       " [alt]="movie.title" />
+  <ng-content>
+
+  </ng-content>
+  <div class="absolute w-11 h-11 top-0 right-0" (click)="deleteMovieOnList($event,movie.id)"></div>
   <div class="block__row">
     <h5 class="block__title">{{ movie.title }}</h5>
     <div class="block__buttons">
-      <button class="button button-favorite" (click)="addToFavoriteListId($event,movie.id)">favorite</button>
-      <button class="button button-watch-later" (click)="addToWatchLaterListId($event,movie.id)">watch later</button>
+      <button class="button button-favorite" (click)="addToFavoriteList($event,movie.id)">favorite</button>
+      <button class="button button-watch-later" (click)="addToWatchList($event,movie.id)">watch later</button>
     </div>
   </div>
 </div>

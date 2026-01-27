@@ -4,9 +4,9 @@ import { AuthGuard } from './guards/auth-guard';
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./pages/home-page/home-page').then((m) => m.HomePage) },
   {
-    path: 'favoryte',
+    path: 'favorite',
     loadComponent: () => import('./pages/favoryte-page/favoryte-page').then((m) => m.FavorytePage),
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'now-playing',
@@ -27,10 +27,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/upcoming-page/upcoming-page').then((m) => m.UpcomingPage),
   },
   {
-    path: 'watch-later',
+    path: 'watch-list',
     loadComponent: () =>
       import('./pages/watch-later-page/watch-later-page').then((m) => m.WatchLaterPage),
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'movie-details',

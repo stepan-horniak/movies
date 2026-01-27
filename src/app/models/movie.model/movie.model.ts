@@ -1,9 +1,9 @@
 export interface MovieRequest {
-  dates: [];
-  page: number;
+  dates?: [];
+  page?: number;
   results: Movie[];
-  total_pages: number;
-  total_results: number;
+  total_pages?: number;
+  total_results?: number;
 }
 
 export interface Movie {

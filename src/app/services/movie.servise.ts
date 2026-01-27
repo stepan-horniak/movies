@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GenreRequest, MovieRequest } from '../models/movie.model/movie.model';
+import { GenreRequest, Movie, MovieRequest } from '../models/movie.model/movie.model';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -50,15 +50,31 @@ export class MovieServise {
     });
   }
   //=========add favorite===
-  // const url = 'https://api.themoviedb.org/3/account/22525014/favorite?session_id=0f4999330d926bfbaf027971363f90ce1b15aac0';
-  // { "movie_id": 238, "media_type": "movie", "favorite": true }
 
-  addFavorite(accountId: string, sessionId: string): Observable<any> {
-    return this.http.post<{}>(
-      `${this.baseUrl}/account/${accountId}/favorite?session_id=${sessionId}`,
-      { media_id: 238, media_type: 'movie', favorite: true },
+  updateFavoriteList(
+    typeList: string,
+    movieId: number,
+    accountId: string,
+    sessionId: string,
+    isFavorite = true,
+  ): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/account/${accountId}/${typeList}?session_id=${sessionId}`,
+      { media_id: movieId, media_type: 'movie', favorite: isFavorite },
 
       { headers: { 'Content-Type': 'application/json;charset=utf-8' } },
     );
   }
+
+  //================get Favorite Or Watch list===
+  getFavoriteOrWatchListMovies(typeList: string, accountId: string): Observable<Movie[]> {
+    return this.http
+      .get<MovieRequest>(`${this.baseUrl}/account/${accountId}/${typeList}/movies`)
+      .pipe(map((res) => res.results));
+  }
+  //==========
+  // const accountId = localStorage.getItem('accountId');
+  // if (!accountId) return;
+  // this.movieService
+  //   .getFavoriteOrWatchListMovies('favorite', accountId)
 }

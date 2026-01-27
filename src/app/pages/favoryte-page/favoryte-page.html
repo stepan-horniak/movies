@@ -1,1 +1,9 @@
-<p>favoryte-page works!</p>
+<div class="wrapper grid grid-cols-5 gap-4">
+  @if (movies$ | async; as movies) {
+  @for (movie of movies; track movie.id) {
+  <app-movie-card [movie]="movie" [isFavoritePage]="true" (removed)="removeFromFavorite(movie.id)">
+    <i class="pi pi-trash absolute right-2 top-2" style="font-size: 1.5rem;color: rgb(214, 95, 95); "></i>
+  </app-movie-card>
+  }
+  }
+</div>
