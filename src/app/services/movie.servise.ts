@@ -52,7 +52,7 @@ export class MovieServise {
   //=========add favorite===
 
   updateFavoriteList(
-    typeList: string,
+    typeList: string, // watchlist | favorite
     movieId: number,
     accountId: string,
     sessionId: string,
@@ -60,7 +60,7 @@ export class MovieServise {
   ): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/account/${accountId}/${typeList}?session_id=${sessionId}`,
-      { media_id: movieId, media_type: 'movie', favorite: isFavorite },
+      { media_id: movieId, media_type: 'movie', [typeList]: isFavorite },
 
       { headers: { 'Content-Type': 'application/json;charset=utf-8' } },
     );
@@ -72,9 +72,4 @@ export class MovieServise {
       .get<MovieRequest>(`${this.baseUrl}/account/${accountId}/${typeList}/movies`)
       .pipe(map((res) => res.results));
   }
-  //==========
-  // const accountId = localStorage.getItem('accountId');
-  // if (!accountId) return;
-  // this.movieService
-  //   .getFavoriteOrWatchListMovies('favorite', accountId)
 }

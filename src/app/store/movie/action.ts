@@ -49,7 +49,6 @@ export const setMovieToWatchLater = createAction(
 //=========================================
 export const isUserLogged = createAction('[auth] Is User Logged ');
 export const loadUserName = createAction('[auth] Load User Name ', props<{ userName: string }>());
-
 //===============================
 export const filterSettings = createAction(
   '[filter] Filter Settings ',

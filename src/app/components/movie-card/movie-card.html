@@ -10,9 +10,13 @@
   <div class="absolute w-11 h-11 top-0 right-0" (click)="deleteMovieOnList($event,movie.id)"></div>
   <div class="block__row">
     <h5 class="block__title">{{ movie.title }}</h5>
-    <div class="block__buttons">
-      <button class="button button-favorite" (click)="addToFavoriteList($event,movie.id)">favorite</button>
-      <button class="button button-watch-later" (click)="addToWatchList($event,movie.id)">watch later</button>
+    <p-toast />
+    <p-confirmpopup />
+    <div class="flex items-center justify-center gap-4">
+      <p-button class="" size="small" (onClick)=" confirm1($event)" label="favorite" [outlined]="true" />
+      <p-button class="whitespace-nowrap" size="small" (onClick)=" confirm2($event)" label="watch list"
+        [outlined]="true" />
+
     </div>
   </div>
 </div>

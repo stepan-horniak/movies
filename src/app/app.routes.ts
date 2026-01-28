@@ -6,7 +6,7 @@ export const routes: Routes = [
   {
     path: 'favorite',
     loadComponent: () => import('./pages/favoryte-page/favoryte-page').then((m) => m.FavorytePage),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'now-playing',
@@ -30,7 +30,7 @@ export const routes: Routes = [
     path: 'watch-list',
     loadComponent: () =>
       import('./pages/watch-later-page/watch-later-page').then((m) => m.WatchLaterPage),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'movie-details',

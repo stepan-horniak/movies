@@ -14,18 +14,18 @@ export const selectMoviesByCategory = (category: MovieCategory) =>
 
 export const selectIsUserLogged = createSelector(
   selectMoviesState,
-  (state) => state.isAuthenticated
+  (state) => state.isAuthenticated,
 );
 
 export const selectUserName = createSelector(selectMoviesState, (state) => state.authUserName);
 export const selectSearchListMovies = createSelector(
   selectMoviesState,
-  (state) => state.searchListMovies
+  (state) => state.searchListMovies,
 );
 
 export const selectSelectedMovie = createSelector(
   selectMoviesState,
-  (state) => state.selectedMovie
+  (state) => state.selectedMovie,
 );
 
 export const selectGenres = createSelector(selectMoviesState, (state) => state.genres);
@@ -34,7 +34,7 @@ export const selectGenres = createSelector(selectMoviesState, (state) => state.g
 
 export const selectFilterSettings = createSelector(
   selectMoviesState,
-  (state) => state.filterSettings
+  (state) => state.filterSettings,
 );
 
 //  filterSettings: {

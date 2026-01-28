@@ -30,6 +30,7 @@ export const MovieReducers = createReducer(
     ...state,
     genres: movies,
   })),
+
   on(MovieActions.filterSettings, (state, { adult, rated, genre, year }) => ({
     ...state,
     filterSettings: {
@@ -38,5 +39,5 @@ export const MovieReducers = createReducer(
       genre,
       year,
     },
-  }))
+  })),
 );

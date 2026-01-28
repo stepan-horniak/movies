@@ -42,45 +42,10 @@
       font-weight: 700;
       margin-bottom: 10px;
     }
-
-    // .block__buttons
-
-    &__buttons {
-      display: flex;
-      justify-content: center;
-      column-gap: 15px;
-      text-align: center;
-    }
   }
-  .button {
-    padding: 7px 5px;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: rgb(214, 95, 95);
-    transition: all 0.3s ease-in-out;
-    color: #ffffff;
-    font-weight: 700;
-  }
-  .button-favorite {
-    @media (any-hover: hover) {
-      &:hover {
-        transition: all 0.3s ease-in-out;
-        background-color: #34d399;
-        color: black;
-        transform: scale(1.1);
-      }
-    }
-  }
-  .button-watch-later {
-    background-color: #34d399;
-    color: black;
-    @media (any-hover: hover) {
-      &:hover {
-        transition: all 0.3s ease-in-out;
-        background-color: rgb(214, 95, 95);
-        color: #ffffff;
-        transform: scale(1.1);
-      }
+  p-button {
+    & > button {
+      padding: 0 2px !important;
     }
   }
 }
