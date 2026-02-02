@@ -13,8 +13,9 @@
     <p-toast />
     <p-confirmpopup />
     <div class="flex items-center justify-center gap-4">
-      <p-button class="" size="small" (onClick)=" confirm1($event)" label="favorite" [outlined]="true" />
-      <p-button class="whitespace-nowrap" size="small" (onClick)=" confirm2($event)" label="watch list"
+      <p-button class="" size="small" (onClick)=" addToFavoriteList($event,movie.id)" label="favorite"
+        [outlined]="true" />
+      <p-button class="whitespace-nowrap" size="small" (onClick)=" addToWatchList($event,movie.id)" label="watch list"
         [outlined]="true" />
 
     </div>

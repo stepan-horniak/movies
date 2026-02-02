@@ -28,6 +28,7 @@ import {
 } from 'primeng/autocomplete';
 import { Movie } from '../../models/movie.model/movie.model';
 import { MovieServise } from '../../services/movie.servise';
+import { LoginDialogService } from '../../services/login-popap.servise';
 
 @Component({
   selector: 'app-header',
@@ -52,11 +53,22 @@ import { MovieServise } from '../../services/movie.servise';
 })
 export class Header implements OnInit {
   public isLogged$!: Observable<boolean>;
-  public openPopapLogIn = false;
+  public openPopapLogIn$!: Observable<boolean>;
   public inputVIsiblePass = 'password';
 
   searchMovies$: Observable<Movie[]>;
   filteredMovies: Movie[] = [];
+
+  constructor(
+    private store: Store,
+    private router: Router,
+    private movieService: MovieServise,
+    private route: ActivatedRoute,
+    private loginPopupService: LoginDialogService,
+  ) {
+    this.searchMovies$ = this.store.select(selectSearchListMovies);
+    this.openPopapLogIn$ = this.loginPopupService.visible$;
+  }
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -66,15 +78,6 @@ export class Header implements OnInit {
   search = new FormGroup({
     search: new FormControl('', Validators.minLength(3)),
   });
-
-  constructor(
-    private store: Store,
-    private router: Router,
-    private movieService: MovieServise,
-    private route: ActivatedRoute,
-  ) {
-    this.searchMovies$ = this.store.select(selectSearchListMovies);
-  }
 
   ngOnInit(): void {
     this.isLogged$ = this.store.select(selectIsUserLogged);
@@ -133,13 +136,13 @@ export class Header implements OnInit {
         document.cookie = `name=; path=/`;
         this.store.dispatch(isUserLogged());
       } else {
-        this.openPopapLogIn = true;
+        this.loginPopupService.open();
       }
     });
   }
 
   closeDialog() {
-    this.openPopapLogIn = false;
+    this.loginPopupService.close();
   }
 
   visiblePass() {

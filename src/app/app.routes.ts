@@ -2,7 +2,11 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-  { path: '', loadComponent: () => import('./pages/home-page/home-page').then((m) => m.HomePage) },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home-page/home-page').then((m) => m.HomePage),
+  },
   {
     path: 'favorite',
     loadComponent: () => import('./pages/favoryte-page/favoryte-page').then((m) => m.FavorytePage),
@@ -29,7 +33,7 @@ export const routes: Routes = [
   {
     path: 'watch-list',
     loadComponent: () =>
-      import('./pages/watch-later-page/watch-later-page').then((m) => m.WatchLaterPage),
+      import('./pages/watch-list-page/watch-list-page').then((m) => m.WatchListPage),
     canActivate: [AuthGuard],
   },
   {

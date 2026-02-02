@@ -23,7 +23,8 @@
 
     <div class="card flex justify-center">
       <p-button (click)="showDialog()" icon="pi pi-user" [label]="  (isLogged$ | async) ? 'Log Out' : 'Log In' " />
-      <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="openPopapLogIn" styleClass="!border-0 !bg-transparent">
+      <p-dialog maskStyleClass="backdrop-blur-sm" [visible]="(openPopapLogIn$ | async)?? false"
+        styleClass="!border-0 !bg-transparent">
         <ng-template #headless>
           <form (ngSubmit)="onSubmitForm()" [formGroup]='form' class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
             style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">

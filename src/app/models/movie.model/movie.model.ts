@@ -52,6 +52,8 @@ export interface MoviesState {
     genre: string;
     year: string;
   };
+  favoriteMovieIds: number[];
+  watchListMovieIds: number[];
 }
 
 export const categoryToStateKey: Record<MovieCategory, keyof MoviesState['listMovies']> = {

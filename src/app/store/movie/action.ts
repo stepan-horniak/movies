@@ -38,12 +38,20 @@ export const selectedMovie = createAction('[Movies] Selected Movie', props<{ mov
 
 //===============
 
-export const setMovieToFavorite = createAction(
-  '[Movies] Set Movie To Favorite ',
+export const addToFavoriteListId = createAction(
+  '[Movies] addToFavoriteListId ',
   props<{ movieId: number }>(),
 );
-export const setMovieToWatchLater = createAction(
-  '[Movies] Set Movie To Watch List ',
+export const removeToFavoriteListId = createAction(
+  '[Movies] removeToFavoriteListId ',
+  props<{ movieId: number }>(),
+);
+export const addToWatchListId = createAction(
+  '[Movies] addToWatchListId ',
+  props<{ movieId: number }>(),
+);
+export const removeFromWatchListId = createAction(
+  '[Movies] removeFromWatchListId ',
   props<{ movieId: number }>(),
 );
 //=========================================

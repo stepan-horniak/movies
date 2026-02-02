@@ -6,7 +6,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { Drawer } from 'primeng/drawer';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectIsUserLogged, selectUserName } from '../../store/movie/selectors';
+import {
+  selectCountFavoriteMovies,
+  selectCountWatchListMovies,
+  selectIsUserLogged,
+  selectUserName,
+} from '../../store/movie/selectors';
 import { Observable, take } from 'rxjs';
 import { CommonModule, NgStyle } from '@angular/common';
 import { Tooltip } from 'primeng/tooltip';
@@ -34,6 +39,8 @@ export class Aside implements OnInit {
   public userName$!: Observable<string>;
   userAuth$!: Observable<boolean>;
   isUserLogIn$!: Observable<boolean>;
+  countFavoriteMovies$!: Observable<number>;
+  countWatchListMovies$!: Observable<number>;
 
   @ViewChild('drawerRef') drawerRef!: Drawer;
 
@@ -43,6 +50,8 @@ export class Aside implements OnInit {
     this.userAuth$ = this.store.select(selectIsUserLogged);
     this.userName$ = this.store.select(selectUserName);
     this.isUserLogIn$ = this.store.select(selectIsUserLogged);
+    this.countFavoriteMovies$ = this.store.select(selectCountFavoriteMovies);
+    this.countWatchListMovies$ = this.store.select(selectCountWatchListMovies);
   }
 
   closeCallback(e: any): void {

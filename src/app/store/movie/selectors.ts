@@ -37,18 +37,12 @@ export const selectFilterSettings = createSelector(
   (state) => state.filterSettings,
 );
 
-//  filterSettings: {
-//     adult: false,
-//     rated: false,
-//     genre: null,
-//     year: null,
-//   },
+export const selectCountFavoriteMovies = createSelector(
+  selectMoviesState,
+  (state) => state.favoriteMovieIds?.length || 0,
+);
 
-// adult
-// false
-// genre_ids
-// (3) [28, 9648, 18]
-// release_date
-// "2025-04-30"
-// vote_average
-// 6.5
+export const selectCountWatchListMovies = createSelector(
+  selectMoviesState,
+  (state) => state.watchListMovieIds?.length || 0,
+);
